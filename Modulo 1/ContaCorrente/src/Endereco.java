@@ -1,5 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
 public class Endereco {
     int tipo; //1-Residencial, 2-Comercial
     String logradouro;
@@ -10,7 +8,7 @@ public class Endereco {
     String estado;
     String pais;
 
-    void imprimirEndereco() {
+    public void imprimirEndereco() {
         if (this.tipo == 1) {
             System.out.println("Tipo: " + this.tipo + " - Residencial");
         } else if (this.tipo == 2) {

@@ -5,55 +5,51 @@ public class ContaCorrente {
     double saldo;
     double chequeEspecial = 200;
 
-    void imprimirContaCorrente(){
-        System.out.println("Cliente: "+cliente);
+
+    public void imprimirContaCorrente(){
+        System.out.println("Cliente \n"+cliente);
         System.out.println("N° conta: "+numeroConta);
         System.out.println("Agencia: "+agencia);
         System.out.println("Saldo: "+saldo);
         System.out.println("Cheque especial: "+chequeEspecial);
     }
 
-    boolean sacar(double valor){
-        boolean status = true;
+    public boolean sacar(double valor){
+
         if (valor < 0){
             System.out.println("Não é permitido sacar valor negativo.");
-            status = false;
+            return  false;
         }else if (saldo + chequeEspecial >= valor){
             saldo -= valor;
-            status = true;
+            return true;
         }else {
             System.out.println("Você não tem saldo suficiente.");
-            status = false;
+            return false;
         }
-        return status;
     }
 
-    boolean depositar(double valor){
-        boolean status = true;
-        if (valor < 0){
-            System.out.println("Não é permitido depositar um valor negativo.");
-            status = false;
+    public boolean depositar(double valor){
+        if (valor <= 0){
+            System.out.println("Não é permitido depositar um valor negativo ou zero.");
+            return false;
         }else {
             saldo += valor;
-            status = true;
+            return true;
         }
-        return status;
     }
 
-    double retornarSaldoComChequeEspecial(){
+    public double retornarSaldoComChequeEspecial(){
         return saldo + chequeEspecial;
     }
 
-    boolean transferir(ContaCorrente conta, ContaCorrente contaD, double valor){
-        boolean status = true;
-        if(valor < 0){
-            System.out.println("Não é permitido transferir um valor negativo.");
-            status = false;
+    public boolean transferir(ContaCorrente conta, double valor){
+        if(valor > saldo + chequeEspecial || valor < 0){
+            System.out.println("Operação não permitida");
+            return false;
         }else {
-            conta.saldo -= valor;
-            contaD.saldo += valor;
-            status = true;
+            this.saldo -= valor;
+            conta.saldo += valor;
+            return true;
         }
-        return status;
     }
 }

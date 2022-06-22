@@ -4,32 +4,26 @@ public class Cliente {
     Contato[] contatos = new Contato[2];
     Endereco[] enderecos = new Endereco[2];
 
-    void imprimirContatos(){
-        if (contatos[1] == null){
-            System.out.println(contatos[0]);
-        }else if (contatos[0] == null){
-            System.out.println(contatos[1]);
-        }else {
-            System.out.println(contatos[0]);
-            System.out.println(contatos[1]);
+    public void imprimirContatos(){
+        for (int i = 0;i<2;i++){
+            if (contatos[i] != null){
+                System.out.println(contatos[i]);
+            }
         }
     }
-    void imprimirEnderecos(){
-        if (enderecos[1] == null){
-            System.out.println(enderecos[0]);
-        }else if (enderecos[0] == null){
-            System.out.println(enderecos[1]);
-        }else {
-            System.out.println(enderecos[0]);
-            System.out.println(enderecos[1]);
+    public void imprimirEnderecos(){
+        for (int i=0;i<2;i++){
+            if (enderecos[i] != null){
+                System.out.println(enderecos[i]);
+            }
         }
     }
-    void imprimirCliente(){
+    public void imprimirCliente(){
         System.out.println("Nome: "+nome);
         System.out.println("CPF: "+cpf);
     }
 
     public String toString(){
-        return "Nome: "+nome+"CPF: "+cpf;
+        return "Nome: "+nome+"\nCPF: "+cpf;
     }
 }
