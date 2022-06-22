@@ -28,4 +28,8 @@ public class Cliente {
         System.out.println("Nome: "+nome);
         System.out.println("CPF: "+cpf);
     }
+
+    public String toString(){
+        return "Nome: "+nome+"CPF: "+cpf;
+    }
 }

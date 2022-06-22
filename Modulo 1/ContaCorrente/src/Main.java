@@ -46,7 +46,7 @@ public class Main {
         cliente1.cpf = "14576283928";
         cliente1.contatos[0]= contato1;
         cliente1.enderecos[0]= endereco1;
-        cliente1.imprimirCliente();
+//        cliente1.imprimirCliente();
 
         cliente2.nome = "Giovana Valentina";
         cliente2.cpf = "42389174566";
@@ -54,8 +54,27 @@ public class Main {
         cliente2.enderecos[0] = endereco1;
         cliente2.contatos[1] = contato2;
         cliente2.enderecos[1] = endereco2;
-        cliente2.imprimirCliente();
-        cliente2.imprimirContatos();
-        cliente2.imprimirEnderecos();
+//        cliente2.imprimirCliente();
+//        cliente2.imprimirContatos();
+//        cliente2.imprimirEnderecos();
+
+        //ContaCorrente
+        ContaCorrente cc1 = new ContaCorrente();
+        cc1.cliente = cliente1;
+        cc1.numeroConta = "1000";
+        cc1.agencia = 1;
+        cc1.saldo = 0;
+        ContaCorrente cc2 = new ContaCorrente();
+        cc2.cliente = cliente2;
+        cc2.numeroConta = "1000";
+        cc2.agencia = 1;
+        cc2.saldo = 0;
+
+//       cc1.imprimirContaCorrente();
+//       cc1.sacar(10);
+//       cc1.depositar(100);
+//       cc1.retornarSaldoComChequeEspecial();
+//       cc1.transferir(cc1,cc2,100);
+        
     }
 }

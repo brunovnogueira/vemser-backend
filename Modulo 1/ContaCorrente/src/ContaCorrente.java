@@ -1,4 +1,3 @@
-//TODO: testar classe
 public class ContaCorrente {
     Cliente cliente;
     String numeroConta;
@@ -45,13 +44,14 @@ public class ContaCorrente {
         return saldo + chequeEspecial;
     }
 
-    boolean transferir(ContaCorrente conta, double valor){
+    boolean transferir(ContaCorrente conta, ContaCorrente contaD, double valor){
         boolean status = true;
         if(valor < 0){
             System.out.println("Não é permitido transferir um valor negativo.");
             status = false;
         }else {
-            conta.saldo =+ valor;
+            conta.saldo -= valor;
+            contaD.saldo += valor;
             status = true;
         }
         return status;
