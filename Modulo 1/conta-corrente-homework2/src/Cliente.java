@@ -60,6 +60,8 @@ public class Cliente {
     public void imprimirCliente(){
         System.out.println("Nome: "+nome);
         System.out.println("CPF: "+cpf);
+        imprimirEnderecos();
+        imprimirContatos();
     }
 
     public String toString(){

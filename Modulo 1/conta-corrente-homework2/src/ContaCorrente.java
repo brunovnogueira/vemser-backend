@@ -1,4 +1,4 @@
-public class ContaCorrente extends Conta implements Movimentacao{
+public class ContaCorrente extends Conta implements Movimentacao,Impressao{
     private double chequeEspecial;
 
     public ContaCorrente(Cliente cliente, String numeroConta, String agencia, double saldo) {
@@ -26,6 +26,16 @@ public class ContaCorrente extends Conta implements Movimentacao{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void imprimir() {
+        if (getCliente()!= null){
+            getCliente().imprimirCliente();
+        }
+        System.out.println("Agencia: "+getAgencia());
+        System.out.println("Número conta: "+getNumeroConta());
+        System.out.println("Saldo: "+getSaldo());
     }
 
     public void setChequeEspecial(double chequeEspecial) {
