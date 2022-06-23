@@ -22,13 +22,15 @@ public class Main {
         //ContaCorrente
         ContaCorrente cc1 = new ContaCorrente(cliente1,"1000","1",0);
         ContaCorrente cc2 = new ContaCorrente(cliente2,"2000","2",0);
-//        cc1.setChequeEspecial(200);
-//        cc2.setChequeEspecial(200);
-//        cc1.depositar(100);
-//        cc1.sacar(10);
-//        cc1.transferir(cc2,100);
-//        cc1.imprimir();
-//        cc2.imprimir();
+        cc1.setChequeEspecial(200);
+        cc2.setChequeEspecial(200);
+        cc1.depositar(100);
+        cc1.sacar(10);
+        cc1.transferir(cc2,100);
+        cc2.imprimir();
+        System.out.println("----------------------");
+        cc1.imprimir();
+        System.out.println("----------------------");
 
         //ContaPoupança
         ContaPoupanca cp1 = new ContaPoupanca(cliente1,"1100","1",0.0);
@@ -37,8 +39,7 @@ public class Main {
         cp2.transferir(cp1,10);
         cp1.creditarTaxa();
         cp2.imprimir();
+        System.out.println("----------------------");
         cp1.imprimir();
-
-
     }
 }
