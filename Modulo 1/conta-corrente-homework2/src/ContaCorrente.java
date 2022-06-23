@@ -21,7 +21,7 @@ public class ContaCorrente extends Conta implements Movimentacao,Impressao{
     public boolean transferir(Conta conta, double valor) {
         double saldo = getSaldo();
         if (valor > 0 && valor <= retornarSaldoComChequeEspecial()){
-            setSaldo(saldo -= valor);
+            sacar(valor);
             conta.depositar(valor);
             return true;
         }
@@ -35,7 +35,7 @@ public class ContaCorrente extends Conta implements Movimentacao,Impressao{
         }
         System.out.println("Agencia: "+getAgencia());
         System.out.println("Número conta: "+getNumeroConta());
-        System.out.println("Saldo: "+getSaldo());
+        System.out.printf("Saldo: %.2f%n",getSaldo());
     }
 
     public void setChequeEspecial(double chequeEspecial) {

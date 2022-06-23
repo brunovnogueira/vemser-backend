@@ -53,7 +53,7 @@ public abstract class Conta implements Movimentacao{
     public boolean transferir(Conta conta, double valor) {
         double saldo = getSaldo();
         if (valor > 0 && valor <= saldo){
-            setSaldo(saldo -= valor);
+            sacar(valor);
             conta.depositar(valor);
             return true;
         }
@@ -66,7 +66,7 @@ public abstract class Conta implements Movimentacao{
             System.out.println("Não é permitido depositar um valor negativo ou zero.");
             return false;
         }else {
-            this.saldo += valor;
+            setSaldo(getSaldo()+valor);
             return true;
         }
     }
