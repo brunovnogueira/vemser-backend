@@ -9,18 +9,6 @@ public class ContaPoupanca extends Conta implements Movimentacao,Impressao {
     }
 
     @Override
-    public boolean sacar(double valor) {
-        double saldo = getSaldo();
-        if (valor > 0 && valor <= saldo){
-            setSaldo(saldo -= valor);
-            return true;
-        }else {
-            System.out.println("Operação não permitida.");
-            return false;
-        }
-    }
-
-    @Override
     public void imprimir() {
         if (getCliente()!= null){
             getCliente().imprimirCliente();

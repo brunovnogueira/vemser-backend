@@ -46,7 +46,14 @@ public abstract class Conta implements Movimentacao{
 
     @Override
     public boolean sacar(double valor) {
-        return false;
+        double saldo = getSaldo();
+        if (valor > 0 && valor <= saldo){
+            setSaldo(saldo -= valor);
+            return true;
+        }else {
+            System.out.println("Operação não permitida.");
+            return false;
+        }
     }
 
     @Override
@@ -57,6 +64,7 @@ public abstract class Conta implements Movimentacao{
             conta.depositar(valor);
             return true;
         }
+        System.out.println("Saldo insuficiente.");
         return false;
     }
 

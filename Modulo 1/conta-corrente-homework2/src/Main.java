@@ -26,7 +26,7 @@ public class Main {
         cc2.setChequeEspecial(200);
         cc1.depositar(100);
         cc1.sacar(10);
-        cc1.transferir(cc2,100);
+        cc1.transferir(cc2,90);
         cc2.imprimir();
         System.out.println("----------------------");
         cc1.imprimir();

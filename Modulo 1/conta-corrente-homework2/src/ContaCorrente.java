@@ -18,17 +18,6 @@ public class ContaCorrente extends Conta implements Movimentacao,Impressao{
     }
 
     @Override
-    public boolean transferir(Conta conta, double valor) {
-        double saldo = getSaldo();
-        if (valor > 0 && valor <= retornarSaldoComChequeEspecial()){
-            sacar(valor);
-            conta.depositar(valor);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public void imprimir() {
         if (getCliente()!= null){
             getCliente().imprimirCliente();
