@@ -30,14 +30,21 @@ public class Main {
         //ContaPoupança
         ContaPoupanca cp2 = new ContaPoupanca(cliente2,"2100","2",0.0);
 
-        cc1.depositar(100);
-//        cc1.sacar(10);
-//        cc1.imprimir();
-        cc1.transferir(cPag,20);
-//        cc1.imprimir();
-//        cPag.imprimir();
-        cPag.transferir(cp2,10);
+        cPag.depositar(100);
+        cPag.sacar(10);
+        cPag.transferir(cc1,80);
         cPag.imprimir();
+        System.out.println("---------------------");
+        cc1.depositar(20);
+        cc1.sacar(10);
+        cc1.transferir(cp2,80);
+        cc1.imprimir();
+        System.out.println("---------------------");
+        cp2.depositar(20);
+        cp2.sacar(10);
+        cp2.transferir(cPag,30);
         cp2.imprimir();
+        cPag.imprimir();
+
     }
 }

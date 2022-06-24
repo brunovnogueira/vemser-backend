@@ -24,7 +24,7 @@ public class ContaCorrente extends Conta implements Movimentacao,Impressao{
         }
         System.out.println("Agencia: "+getAgencia());
         System.out.println("Número conta: "+getNumeroConta());
-        System.out.printf("Saldo: %.2f%n",getSaldo());
+        System.out.printf("Saldo: %.2f%n%n",getSaldo());
     }
 
     public void setChequeEspecial(double chequeEspecial) {
