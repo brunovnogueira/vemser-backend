@@ -1,11 +1,9 @@
 public class ContaPagamento extends Conta implements Impressao{
 
     private static final Double TAXA_SAQUE = 4.25;
-
     public ContaPagamento(Cliente cliente, String numeroConta, String agencia, double saldo) {
         super(cliente, numeroConta, agencia, saldo);
     }
-
     @Override
     public void imprimir() {
         if (getCliente()!= null){
@@ -15,11 +13,20 @@ public class ContaPagamento extends Conta implements Impressao{
         System.out.println("Número conta: "+getNumeroConta());
         System.out.printf("Saldo: %.2f%n%n",getSaldo());
     }
-
     @Override
     public boolean sacar(double valor) {
         if (valor + TAXA_SAQUE <= getSaldo() && valor > 0) {
             super.sacar(valor + TAXA_SAQUE);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean transferir(Conta conta, double valor) {
+        if (valor <= getSaldo() && valor > 0){
+            setSaldo(getSaldo() - valor);
+            conta.depositar(valor);
             return true;
         }
         return false;

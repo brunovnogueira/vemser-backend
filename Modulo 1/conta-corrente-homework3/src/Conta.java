@@ -3,8 +3,6 @@ public abstract class Conta implements Movimentacao{
     private String numeroConta;
     private String agencia;
     private double saldo;
-
-
     public Conta(Cliente cliente, String numeroConta, String agencia, double saldo) {
         this.cliente = cliente;
         this.numeroConta = numeroConta;

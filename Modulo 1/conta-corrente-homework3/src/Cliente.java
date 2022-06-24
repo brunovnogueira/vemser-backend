@@ -6,11 +6,6 @@ public class Cliente {
     private ArrayList<Contato> contatos = new ArrayList<>();
     private ArrayList<Endereco> enderecos = new ArrayList<>();
 
-
-    public void setContatos(ArrayList<Contato> contatos) {
-        this.contatos = contatos;
-    }
-
     public ArrayList<Contato> getContatos() {
         return contatos;
     }
@@ -19,15 +14,17 @@ public class Cliente {
         return enderecos;
     }
 
-    public void setEnderecos(ArrayList<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
     public Cliente(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;
 
     }
-
+    public void setContatos(ArrayList<Contato> contatos) {
+        this.contatos = contatos;
+    }
+    public void setEnderecos(ArrayList<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
 
     public String getNome() {
         return nome;
@@ -46,16 +43,20 @@ public class Cliente {
     }
 
     public void imprimirContatos(){
-        for (Contato contato : contatos) {
-            if (contato != null){
-                contato.imprimirContato();
+        if (contatos != null){
+            for (Contato contato : contatos) {
+                if (contato != null){
+                    contato.imprimirContato();
+                }
             }
         }
     }
     public void imprimirEnderecos(){
-        for (Endereco endereco : enderecos) {
-            if (endereco != null){
-                endereco.imprimirEndereco();
+        if (enderecos != null){
+            for (Endereco endereco : enderecos) {
+                if (endereco != null){
+                    endereco.imprimirEndereco();
+                }
             }
         }
     }
