@@ -64,15 +64,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Lucas\",\r\n    \"dataNascimento\": \"1980-04-20\",\r\n    \"cpf\": \"12345678912\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "https://back-vemserdbc.herokuapp.com/pessoa/3",
 							"protocol": "https",
@@ -149,7 +140,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://back-vemserdbc.herokuapp.com/contato/?idPessoa=1",
+							"raw": "https://back-vemserdbc.herokuapp.com/contato/1",
 							"protocol": "https",
 							"host": [
 								"back-vemserdbc",
@@ -158,13 +149,7 @@
 							],
 							"path": [
 								"contato",
-								""
-							],
-							"query": [
-								{
-									"key": "idPessoa",
-									"value": "1"
-								}
+								"1"
 							]
 						}
 					},
@@ -235,17 +220,8 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tipoContato\": \"COMERCIAL\",\r\n    \"numero\": \"99955876566\",\r\n    \"descricao\": \"whatsapp\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "https://back-vemserdbc.herokuapp.com/contato/5",
+							"raw": "https://back-vemserdbc.herokuapp.com/contato/1",
 							"protocol": "https",
 							"host": [
 								"back-vemserdbc",
@@ -254,7 +230,7 @@
 							],
 							"path": [
 								"contato",
-								"5"
+								"1"
 							]
 						}
 					},
