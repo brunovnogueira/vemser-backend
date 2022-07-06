@@ -1,7 +1,9 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.config.PropertyReader;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,20 +11,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/pessoa") // localhost:8080/pessoa
 public class PessoaController {
-
+    @Autowired //não preciso mais instanciar um new PessoaService()
     private PessoaService pessoaService;
 
-    public PessoaController() {
-        pessoaService = new PessoaService();
-    }
+    @Autowired
+    private PropertyReader propertyReader;
+
+//    //Modelo novo (depreciamento do AutoWired)
+//    private final PessoaService pessoaService;
+//    public PessoaController(PessoaService pessoaService) {
+//        this.pessoaService = pessoaService;
+//    }
+
 
     @GetMapping("/hello") // localhost:8080/pessoa/hello
     public String hello() {
         return "Hello world!";
     }
 
+    @GetMapping("/ambiente")
+    public String propertyReader(){
+        return propertyReader.getAmbiente();
+    }
+
     @PostMapping // localhost:8080/pessoa
-    public Pessoa create(@RequestBody Pessoa pessoa) {
+    public Pessoa create(@RequestBody Pessoa pessoa) throws Exception {
         return pessoaService.create(pessoa);
     }
 
