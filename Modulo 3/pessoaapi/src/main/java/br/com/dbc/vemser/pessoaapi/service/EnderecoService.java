@@ -48,10 +48,7 @@ public class EnderecoService {
     }
 
     public Endereco update(Integer id, Endereco enderecoAtualizar) throws Exception {
-        Endereco enderecoRecuperado = enderecoRepository.list().stream().
-                filter(endereco -> endereco.getIdEndereco().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("idEndereco inválido"));
+        Endereco enderecoRecuperado = findById(id);
 
         enderecoRecuperado.setIdPessoa(enderecoAtualizar.getIdPessoa());
         enderecoRecuperado.setTipo(enderecoAtualizar.getTipo());
@@ -66,10 +63,15 @@ public class EnderecoService {
     }
 
     public void delete(Integer id) throws Exception {
+        Endereco endereco = findById(id);
+        enderecoRepository.list().remove(endereco);
+    }
+
+    public Endereco findById(Integer idEndereco) throws Exception {
         Endereco endereco = enderecoRepository.list().stream()
-                .filter(endereco1 -> endereco1.getIdEndereco().equals(id))
+                .filter(endereco1 -> endereco1.getIdEndereco().equals(idEndereco))
                 .findFirst()
                 .orElseThrow(()->new Exception("Endereço não cadastrado"));
-        enderecoRepository.list().remove(endereco);
+        return endereco;
     }
 }
