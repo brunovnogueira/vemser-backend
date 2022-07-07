@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e1e981cc-a238-4e57-902d-b6110a044caa",
-		"name": "pessoa-api",
+		"name": "pessoa-api-hw2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21782445"
 	},
@@ -30,20 +30,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/contato/byidpessoa?idPessoa=2",
+					"raw": "localhost:8080/contato/2",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"contato",
-						"byidpessoa"
-					],
-					"query": [
-						{
-							"key": "idPessoa",
-							"value": "2"
-						}
+						"2"
 					]
 				}
 			},
@@ -56,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"idPessoa\": 4,\r\n    \"tipoContato\": \"PESSOAL\",\r\n    \"numero\": \"444444\",\r\n    \"descricao\": \"telefone\"\r\n}",
+					"raw": "{\r\n    \"tipoContato\": \"PESSOAL\",\r\n    \"numero\": \"444444\",\r\n    \"descricao\": \"telefone\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -64,13 +58,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/contato",
+					"raw": "localhost:8080/contato/5",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"contato"
+						"contato",
+						"5"
 					]
 				}
 			},

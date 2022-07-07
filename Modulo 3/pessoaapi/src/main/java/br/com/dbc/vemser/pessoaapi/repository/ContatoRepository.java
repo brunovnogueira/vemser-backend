@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ContatoRepository {
     private static List<Contato> listaContatos = new ArrayList<>();
     private AtomicInteger COUNTER = new AtomicInteger();
-    PessoaRepository pessoaRepository = new PessoaRepository();
+
     public ContatoRepository() {
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*1*/, 1, "COMERCIAL", "12345678910", "whatsapp"));
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*2*/, 2, "RESIDENCIAL", "6756638848", "telefone"));
@@ -21,12 +21,7 @@ public class ContatoRepository {
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*5*/, 5, "PESSOAL", "775884773994", "whatsapp"));
     }
 
-    public Contato create(Contato contato) throws Exception {
-        pessoaRepository.list().stream()
-                .filter(pessoa -> pessoa.getIdPessoa().equals(contato.getIdPessoa()))
-                .findFirst()
-                .orElseThrow(()-> new Exception("Id não válido"));
-
+    public Contato create(Contato contato){
         contato.setIdContato(COUNTER.incrementAndGet());
         listaContatos.add(contato);
         return contato;
@@ -52,7 +47,7 @@ public class ContatoRepository {
         Contato contatoRecuperado = listaContatos.stream()
                 .filter(contato -> contato.getIdContato().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não econtrada"));
+                .orElseThrow(() -> new Exception("Pessoa não encontrada"));
         listaContatos.remove(contatoRecuperado);
     }
 
