@@ -1,6 +1,8 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class EnderecoService {
     @Autowired
     EnderecoRepository enderecoRepository;
     @Autowired
-    PessoaRepository pessoaRepository;
+    PessoaService pessoaService;
 
     public List<Endereco> list(){
         return enderecoRepository.list();
@@ -33,23 +35,14 @@ public class EnderecoService {
                 .collect(Collectors.toList());
     }
 
-    public Endereco create(Integer idPessoa, Endereco endereco) throws Exception {
-        boolean pessoaValida = pessoaRepository.list().stream().anyMatch(pessoa -> pessoa.getIdPessoa().equals(idPessoa));
-
-        if (pessoaValida){
-            enderecoRepository.create(endereco);
-            endereco.setIdPessoa(idPessoa);
-            enderecoRepository.list().add(endereco);
-            return endereco;
-        }else {
-            throw new Exception("idPessoa inválido");
-        }
+    public Endereco create(Integer idPessoa, Endereco endereco) throws RegraDeNegocioException {
+        Pessoa pessoaValida = pessoaService.findById(idPessoa);
+        endereco.setIdPessoa(idPessoa);
+        return enderecoRepository.create(endereco);
     }
 
-    public Endereco update(Integer id, Endereco enderecoAtualizar) throws Exception {
+    public Endereco update(Integer id, Endereco enderecoAtualizar) throws RegraDeNegocioException {
         Endereco enderecoRecuperado = findById(id);
-
-        enderecoRecuperado.setIdPessoa(enderecoAtualizar.getIdPessoa());
         enderecoRecuperado.setTipo(enderecoAtualizar.getTipo());
         enderecoRecuperado.setLogradouro(enderecoAtualizar.getLogradouro());
         enderecoRecuperado.setNumero(enderecoAtualizar.getNumero());
@@ -61,16 +54,16 @@ public class EnderecoService {
         return enderecoRecuperado;
     }
 
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) throws RegraDeNegocioException {
         Endereco endereco = findById(id);
         enderecoRepository.list().remove(endereco);
     }
 
-    public Endereco findById(Integer idEndereco) throws Exception {
+    public Endereco findById(Integer idEndereco) throws RegraDeNegocioException {
         Endereco endereco = enderecoRepository.list().stream()
                 .filter(endereco1 -> endereco1.getIdEndereco().equals(idEndereco))
                 .findFirst()
-                .orElseThrow(()->new Exception("Endereço não cadastrado"));
+                .orElseThrow(()->new RegraDeNegocioException("Endereço não cadastrado"));
         return endereco;
     }
 }

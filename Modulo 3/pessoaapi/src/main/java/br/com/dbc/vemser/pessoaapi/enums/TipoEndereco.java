@@ -11,12 +11,7 @@ public enum TipoEndereco {
     TipoEndereco(Integer tipoEndereco){
         this.tipoEndereco = tipoEndereco;
     }
-
-    public static TipoEndereco ofTipo (Integer tipoEndereco){
-        return Arrays.stream(TipoEndereco.values()).filter(tipoEndereco1 -> tipoEndereco1.getTipoEndereco().equals(tipoEndereco))
-                .findFirst()
-                .get();
-    }
+    
 
     public Integer getTipoEndereco() {
         return tipoEndereco;

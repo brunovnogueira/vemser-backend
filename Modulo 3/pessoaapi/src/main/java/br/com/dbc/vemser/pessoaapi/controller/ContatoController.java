@@ -49,7 +49,7 @@ public class ContatoController {
 
     //Deletar
     @DeleteMapping("/{idContato}")
-    public void delete(@PathVariable("idContato") Integer id) throws Exception{
+    public void delete(@PathVariable("idContato") Integer id) throws RegraDeNegocioException {
         contatoService.delete(id);
     }
 }
