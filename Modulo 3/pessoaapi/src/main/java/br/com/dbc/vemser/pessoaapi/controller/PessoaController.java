@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.config.PropertyReader;
+import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class PessoaController {
     }
 
     @PostMapping // localhost:8080/pessoa
-    public ResponseEntity<Pessoa> create(@RequestBody @Valid Pessoa pessoa) throws Exception {
+    public ResponseEntity<Pessoa> create(@RequestBody @Valid Pessoa pessoa){
         return ResponseEntity.ok(pessoaService.create(pessoa));
     }
 
@@ -48,19 +49,19 @@ public class PessoaController {
         return pessoaService.list();
     }
 
-    @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
-    public List<Pessoa> listByName(@RequestParam("nome") String nome) {
+    @GetMapping("/{nome}") // localhost:8080/pessoa/byname?nome=Rafa
+    public List<Pessoa> listByName(@PathVariable("nome") String nome) {
         return pessoaService.listByName(nome);
     }
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
     public ResponseEntity<Pessoa> update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody @Valid Pessoa pessoaAtualizar) throws Exception {
+                         @RequestBody @Valid Pessoa pessoaAtualizar) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.update(id, pessoaAtualizar));
     }
 
     @DeleteMapping("/{idPessoa}") // localhost:8080/pessoa/10
-    public void delete(@PathVariable("idPessoa") Integer id) throws Exception {
+    public void delete(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         pessoaService.delete(id);
     }
 }
