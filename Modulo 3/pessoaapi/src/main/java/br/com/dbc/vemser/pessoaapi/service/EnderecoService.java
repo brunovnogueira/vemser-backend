@@ -16,7 +16,6 @@ public class EnderecoService {
     EnderecoRepository enderecoRepository;
     @Autowired
     PessoaRepository pessoaRepository;
-    private AtomicInteger COUNTER = new AtomicInteger();
 
     public List<Endereco> list(){
         return enderecoRepository.list();

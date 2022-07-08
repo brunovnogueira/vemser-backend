@@ -1,13 +1,18 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/contato")
 public class ContatoController {
 
@@ -32,14 +37,14 @@ public class ContatoController {
 
     //Adicionar
     @PostMapping("/{idPessoa}")
-    public Contato create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody Contato contato) throws Exception{
-        return contatoService.create(contato,idPessoa);
+    public ResponseEntity<Contato> create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody @Valid Contato contato) throws RegraDeNegocioException {
+        return ResponseEntity.ok(contatoService.create(contato,idPessoa));
     }
 
     //Atualizar
     @PutMapping("/{idContato}")
-    public Contato update(@PathVariable("idContato") Integer id, @RequestBody Contato contatoAtualizar) throws Exception{
-        return contatoService.update(id,contatoAtualizar);
+    public ResponseEntity<Contato> update(@PathVariable("idContato") Integer id, @RequestBody @Valid Contato contatoAtualizar) throws RegraDeNegocioException{
+        return ResponseEntity.ok(contatoService.update(id,contatoAtualizar));
     }
 
     //Deletar
