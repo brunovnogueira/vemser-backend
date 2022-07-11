@@ -1,7 +1,8 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.config.PropertyReader;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOcreate;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +41,24 @@ public class PessoaController {
     }
 
     @PostMapping // localhost:8080/pessoa
-    public ResponseEntity<Pessoa> create(@RequestBody @Valid Pessoa pessoa){
+    public ResponseEntity<PessoaDTO> create(@RequestBody @Valid PessoaDTOcreate pessoa){
         return ResponseEntity.ok(pessoaService.create(pessoa));
+        //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.OK)
     }
 
     @GetMapping // localhost:8080/pessoa
-    public List<Pessoa> list() {
+    public List<PessoaDTO> list() {
         return pessoaService.list();
     }
 
     @GetMapping("/{nome}") // localhost:8080/pessoa/byname?nome=Rafa
-    public List<Pessoa> listByName(@PathVariable("nome") String nome) {
+    public List<PessoaDTO> listByName(@PathVariable("nome") String nome) {
         return pessoaService.listByName(nome);
     }
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
-    public ResponseEntity<Pessoa> update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody @Valid Pessoa pessoaAtualizar) throws RegraDeNegocioException {
+    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
+                         @RequestBody @Valid PessoaDTOcreate pessoaAtualizar) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.update(id, pessoaAtualizar));
     }
 

@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTOcreate;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +20,27 @@ public class EnderecoController {
     private EnderecoService enderecoService;
 
     @GetMapping
-    public List<Endereco> list(){
+    public List<EnderecoDTO> list(){
         return enderecoService.list();
     }
 
     @GetMapping("/{idEndereco}")
-    public List<Endereco> listPorId(@PathVariable("idEndereco") Integer id){
+    public List<EnderecoDTO> listPorId(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
         return enderecoService.listPorId(id);
     }
 
     @GetMapping("/{idPessoa}/pessoa")
-    public List<Endereco> listPorIdPessoa(@PathVariable("idPessoa") Integer id){
+    public List<EnderecoDTO> listPorIdPessoa(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         return enderecoService.listPorIdPessoa(id);
     }
 
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<Endereco> create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody @Valid Endereco endereco) throws RegraDeNegocioException {
+    public ResponseEntity<EnderecoDTO> create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody @Valid EnderecoDTOcreate endereco) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.create(idPessoa, endereco));
     }
 
     @PutMapping("/{idEndereco}")
-    public ResponseEntity<Endereco> update(@PathVariable("idEndereco") Integer idEndereco, @RequestBody @Valid Endereco endereco) throws RegraDeNegocioException {
+    public ResponseEntity<EnderecoDTO> update(@PathVariable("idEndereco") Integer idEndereco, @RequestBody @Valid EnderecoDTOcreate endereco) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.update(idEndereco, endereco));
     }
 

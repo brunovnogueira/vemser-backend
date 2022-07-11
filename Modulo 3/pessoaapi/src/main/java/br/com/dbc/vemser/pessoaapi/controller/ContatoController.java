@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
+import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.ContatoDTOcreate;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
@@ -25,25 +27,25 @@ public class ContatoController {
 
     //Listar Geral
     @GetMapping
-    public List<Contato> list(){
+    public List<ContatoDTO> list(){
         return contatoService.list();
     }
 
     //Listar por id pessoa
     @GetMapping("/{idPessoa}")
-    public List<Contato> listByIdPessoa(@PathVariable("idPessoa") Integer id){
+    public List<ContatoDTO> listByIdPessoa(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         return contatoService.listByIdPessoa(id);
     }
 
     //Adicionar
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<Contato> create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody @Valid Contato contato) throws RegraDeNegocioException {
+    public ResponseEntity<ContatoDTO> create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody @Valid ContatoDTOcreate contato) throws RegraDeNegocioException {
         return ResponseEntity.ok(contatoService.create(contato,idPessoa));
     }
 
     //Atualizar
     @PutMapping("/{idContato}")
-    public ResponseEntity<Contato> update(@PathVariable("idContato") Integer id, @RequestBody @Valid Contato contatoAtualizar) throws RegraDeNegocioException{
+    public ResponseEntity<ContatoDTO> update(@PathVariable("idContato") Integer id, @RequestBody @Valid ContatoDTOcreate contatoAtualizar) throws RegraDeNegocioException{
         return ResponseEntity.ok(contatoService.update(id,contatoAtualizar));
     }
 

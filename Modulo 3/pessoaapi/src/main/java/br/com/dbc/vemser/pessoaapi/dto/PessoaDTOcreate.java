@@ -1,23 +1,23 @@
-package br.com.dbc.vemser.pessoaapi.entity;
+package br.com.dbc.vemser.pessoaapi.dto;
 
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
-public class Pessoa {
-
-    private Integer idPessoa;
-    @NotBlank //valida se não é nula e nem com espaços em branco
+public class PessoaDTOcreate{
+    @NotBlank
     private String nome;
-    @NotNull(message = "Informe a data de nascimento")
+    @NotNull
     private LocalDate dataNascimento;
-    @CPF(message = "CPF inválido")
+    @CPF
+    @NotBlank
     private String cpf;
-
 }
