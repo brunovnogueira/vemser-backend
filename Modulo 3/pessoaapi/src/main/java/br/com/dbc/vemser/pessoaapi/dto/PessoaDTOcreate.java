@@ -3,6 +3,7 @@ package br.com.dbc.vemser.pessoaapi.dto;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -20,4 +21,7 @@ public class PessoaDTOcreate{
     @CPF
     @NotBlank
     private String cpf;
+    @Email
+    @NotBlank
+    private String email;
 }

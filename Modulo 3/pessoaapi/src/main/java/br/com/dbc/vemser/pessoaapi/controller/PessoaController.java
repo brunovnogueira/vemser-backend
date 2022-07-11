@@ -4,12 +4,14 @@ import br.com.dbc.vemser.pessoaapi.config.PropertyReader;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOcreate;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -19,7 +21,8 @@ import java.util.List;
 public class PessoaController {
     @Autowired //não preciso mais instanciar um new PessoaService()
     private PessoaService pessoaService;
-
+    @Autowired
+    private EmailService emailService;
 //    @Autowired
 //    private PropertyReader propertyReader;
 
@@ -45,7 +48,12 @@ public class PessoaController {
         return ResponseEntity.ok(pessoaService.create(pessoa));
         //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.OK)
     }
-
+    @GetMapping("/email")
+    public String email() throws MessagingException {
+        //emailService.sendSimpleMessage();
+        emailService.sendWithAttachment();
+        return "Enviando email!";
+    }
     @GetMapping // localhost:8080/pessoa
     public List<PessoaDTO> list() {
         return pessoaService.list();

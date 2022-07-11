@@ -19,5 +19,6 @@ public class Pessoa {
     private LocalDate dataNascimento;
     @CPF(message = "CPF inválido")
     private String cpf;
+    private String email;
 
 }

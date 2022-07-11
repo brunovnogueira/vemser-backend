@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,8 @@ public class PessoaService {
     private PessoaRepository pessoaRepository;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private EmailService emailService;
     public PessoaService(){
 
     }
@@ -31,6 +34,7 @@ public class PessoaService {
         pessoaRepository.create(pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
         log.info("Pessoa criada!");
+        emailService.sendEmailPessoaCadastrada(pessoaDTO);
         return pessoaDTO;
     }
 
