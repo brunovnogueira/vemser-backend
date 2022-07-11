@@ -20,8 +20,8 @@ public class PessoaController {
     @Autowired //não preciso mais instanciar um new PessoaService()
     private PessoaService pessoaService;
 
-    @Autowired
-    private PropertyReader propertyReader;
+//    @Autowired
+//    private PropertyReader propertyReader;
 
 //    //Modelo novo (depreciamento do AutoWired)
 //    private final PessoaService pessoaService;
@@ -35,10 +35,10 @@ public class PessoaController {
         return "Hello world!";
     }
 
-    @GetMapping("/ambiente")
-    public String propertyReader(){
-        return propertyReader.getAmbiente();
-    }
+//    @GetMapping("/ambiente")
+//    public String propertyReader(){
+//        return propertyReader.getAmbiente();
+//    }
 
     @PostMapping // localhost:8080/pessoa
     public ResponseEntity<PessoaDTO> create(@RequestBody @Valid PessoaDTOcreate pessoa){
