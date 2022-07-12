@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOcreate;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOCreate;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,7 @@ public class PessoaService {
 
     }
 
-    public PessoaDTO create(PessoaDTOcreate pessoa){
+    public PessoaDTO create(PessoaDTOCreate pessoa){
         log.info("Criando pessoa...");
         Pessoa pessoaEntity = objectMapper.convertValue(pessoa,Pessoa.class);
         pessoaRepository.create(pessoaEntity);
@@ -46,7 +45,7 @@ public class PessoaService {
     }
 
     public PessoaDTO update(Integer id,
-                         PessoaDTOcreate pessoaAtualizar) throws RegraDeNegocioException {
+                         PessoaDTOCreate pessoaAtualizar) throws RegraDeNegocioException {
         Pessoa pessoaEntity = objectMapper.convertValue(pessoaAtualizar,Pessoa.class);
         Pessoa pessoaRecuperada = findById(id);
         log.info("Atualizando pessoa...");
@@ -74,7 +73,7 @@ public class PessoaService {
         Pessoa pessoaRecuperada = pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não econtrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada"));
         return pessoaRecuperada;
     }
 }

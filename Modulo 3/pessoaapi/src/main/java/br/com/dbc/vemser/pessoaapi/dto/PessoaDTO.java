@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class PessoaDTO extends PessoaDTOcreate{
+public class PessoaDTO extends PessoaDTOCreate {
 
     private Integer idPessoa;
 

@@ -7,6 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class ContatoDTO extends ContatoDTOcreate{
+public class ContatoDTO extends ContatoDTOCreate {
     private Integer idContato;
 }

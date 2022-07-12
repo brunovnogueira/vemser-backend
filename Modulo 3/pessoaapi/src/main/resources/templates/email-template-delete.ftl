@@ -15,15 +15,13 @@
                         style="background-color: #d3be6c; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; padding: 0px 15px 10px 15px;">
 
                         <div style="font-size: 48px; color:blue;">
-                            <b>Cadastro de endereço</b>
+                            <b>Endereço deletado</b>
                         </div>
 
                         <div style="font-size: 24px; color: #555100;">
-                            <br> Obrigado por cadastrar seu endereço na nossa plataforma! Segue abaixo seus dados
-                            cadastrados:<br>
+                            <br> Seus dados abaixo foram deletados do sistema:<br>
                         </div>
                         <div>
-                            <br> <br> <b>${nome} - ${email}</b>
                             <br> <br>Tipo de endereço: ${tipo}
                             <p>${logradouro}, ${numero} - ${complemento}</p>
                             <p>CEP: ${cep}</p>

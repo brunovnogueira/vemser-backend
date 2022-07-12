@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
-import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTOcreate;
+import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTOCreate;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +35,12 @@ public class EnderecoController {
     }
 
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<EnderecoDTO> create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody @Valid EnderecoDTOcreate endereco) throws RegraDeNegocioException {
+    public ResponseEntity<EnderecoDTO> create(@PathVariable("idPessoa") Integer idPessoa, @RequestBody @Valid EnderecoDTOCreate endereco) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.create(idPessoa, endereco));
     }
 
     @PutMapping("/{idEndereco}")
-    public ResponseEntity<EnderecoDTO> update(@PathVariable("idEndereco") Integer idEndereco, @RequestBody @Valid EnderecoDTOcreate endereco) throws RegraDeNegocioException {
+    public ResponseEntity<EnderecoDTO> update(@PathVariable("idEndereco") Integer idEndereco, @RequestBody @Valid EnderecoDTOCreate endereco) throws RegraDeNegocioException {
         return ResponseEntity.ok(enderecoService.update(idEndereco, endereco));
     }
 

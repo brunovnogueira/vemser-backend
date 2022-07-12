@@ -1,13 +1,11 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
-import br.com.dbc.vemser.pessoaapi.dto.ContatoDTOcreate;
+import br.com.dbc.vemser.pessoaapi.dto.ContatoDTOCreate;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
-import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
-import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,7 @@ public class ContatoService {
 
     }
 
-    public ContatoDTO create(ContatoDTOcreate contato, Integer idPessoa) throws RegraDeNegocioException {
+    public ContatoDTO create(ContatoDTOCreate contato, Integer idPessoa) throws RegraDeNegocioException {
         Pessoa pessoaValida = pessoaService.findById(idPessoa);
         Contato contatoEntity = objectMapper.convertValue(contato,Contato.class);
         log.info("Criando contato...");
@@ -42,7 +40,7 @@ public class ContatoService {
         return contatoRepository.list().stream().map(contato -> objectMapper.convertValue(contato,ContatoDTO.class)).collect(Collectors.toList());
     }
     public ContatoDTO update(Integer id,
-                         ContatoDTOcreate contatoAtualizar) throws RegraDeNegocioException {
+                         ContatoDTOCreate contatoAtualizar) throws RegraDeNegocioException {
         pessoaService.findById(contatoAtualizar.getIdPessoa());
         Contato contatoRecuperado = findById(id);
         objectMapper.convertValue(contatoAtualizar,Contato.class);

@@ -1,8 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.config.PropertyReader;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOcreate;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOCreate;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
@@ -44,14 +43,15 @@ public class PessoaController {
 //    }
 
     @PostMapping // localhost:8080/pessoa
-    public ResponseEntity<PessoaDTO> create(@RequestBody @Valid PessoaDTOcreate pessoa){
+    public ResponseEntity<PessoaDTO> create(@RequestBody @Valid PessoaDTOCreate pessoa){
         return ResponseEntity.ok(pessoaService.create(pessoa));
         //return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.OK)
     }
     @GetMapping("/email")
     public String email() throws MessagingException {
         //emailService.sendSimpleMessage();
-        emailService.sendWithAttachment();
+        //emailService.sendWithAttachment();
+        //emailService.sendEmail();
         return "Enviando email!";
     }
     @GetMapping // localhost:8080/pessoa
@@ -66,7 +66,7 @@ public class PessoaController {
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
     public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody @Valid PessoaDTOcreate pessoaAtualizar) throws RegraDeNegocioException {
+                         @RequestBody @Valid PessoaDTOCreate pessoaAtualizar) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.update(id, pessoaAtualizar));
     }
 

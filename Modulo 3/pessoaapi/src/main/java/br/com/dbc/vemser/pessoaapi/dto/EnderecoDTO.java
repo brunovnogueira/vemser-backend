@@ -7,6 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class EnderecoDTO extends EnderecoDTOcreate{
+public class EnderecoDTO extends EnderecoDTOCreate {
     private Integer idEndereco;
 }

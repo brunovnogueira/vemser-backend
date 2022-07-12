@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @ToString
-public class ContatoDTOcreate {
+public class ContatoDTOCreate {
     private Integer idPessoa;
     @NotNull
     private TipoContato tipoContato;

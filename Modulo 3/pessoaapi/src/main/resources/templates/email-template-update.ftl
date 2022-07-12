@@ -15,12 +15,11 @@
                         style="background-color: #d3be6c; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; padding: 0px 15px 10px 15px;">
 
                         <div style="font-size: 48px; color:blue;">
-                            <b>Cadastro de endereço</b>
+                            <b>Atualização de endereço</b>
                         </div>
 
                         <div style="font-size: 24px; color: #555100;">
-                            <br> Obrigado por cadastrar seu endereço na nossa plataforma! Segue abaixo seus dados
-                            cadastrados:<br>
+                            <br> Seus dados foram atualizados. Segue abaixo:<br>
                         </div>
                         <div>
                             <br> <br> <b>${nome} - ${email}</b>

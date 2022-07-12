@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class PessoaDTOcreate{
+public class PessoaDTOCreate {
     @NotBlank
     private String nome;
     @NotNull
