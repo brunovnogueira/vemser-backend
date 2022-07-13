@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @AllArgsConstructor
@@ -8,7 +9,7 @@ import lombok.*;
 @Setter
 @ToString
 public class PessoaDTO extends PessoaDTOCreate {
-
+    @Schema(description = "Id da pessoa")
     private Integer idPessoa;
 
 }

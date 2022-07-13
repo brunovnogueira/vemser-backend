@@ -53,7 +53,7 @@ public class PessoaService {
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
         log.info("Pessoa atualizada!");
-        return objectMapper.convertValue(pessoaAtualizar,PessoaDTO.class);
+        return objectMapper.convertValue(pessoaRecuperada,PessoaDTO.class);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {

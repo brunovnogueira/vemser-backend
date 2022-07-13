@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.enums;
 
+import java.util.Arrays;
+
 public enum TipoContato {
     RESIDENCIAL(1),
     COMERCIAL(2);
@@ -12,5 +14,11 @@ public enum TipoContato {
 
     public Integer getTipoContato() {
         return tipoContato;
+    }
+    public static TipoContato ofTipo(Integer tipo) {
+        return Arrays.stream(TipoContato.values())
+                .filter(tp -> tp.getTipoContato().equals(tipo))
+                .findFirst()
+                .get();
     }
 }
