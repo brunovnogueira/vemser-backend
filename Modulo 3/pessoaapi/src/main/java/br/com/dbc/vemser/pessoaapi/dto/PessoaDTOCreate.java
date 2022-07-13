@@ -15,17 +15,17 @@ import java.time.LocalDate;
 @Setter
 @ToString
 public class PessoaDTOCreate {
-    @Schema(description = "Nome da Pessoa")
+    @Schema(description = "Nome da Pessoa", example = "Bruno")
     @NotBlank
     private String nome;
-    @Schema(description = "Data de nascimento")
+    @Schema(description = "Data de nascimento", example = "1993-09-28")
     @NotNull
     private LocalDate dataNascimento;
-    @Schema(description = "CPF da pessoa")
+    @Schema(description = "CPF da pessoa", example = "314.725.158-62")
     @CPF
     @NotBlank
     private String cpf;
-    @Schema(description = "Email da pessoa")
+    @Schema(description = "Email da pessoa", example = "user@gmail.com")
     @Email
     @NotBlank
     private String email;

@@ -17,30 +17,30 @@ import javax.validation.constraints.Size;
 public class EnderecoDTOCreate {
     @Schema(description = "Id da pessoa")
     private Integer idPessoa;
-    @Schema(description = "Tipo do endereço")
+    @Schema(description = "Tipo do endereço", example = "1 para COMERCIAL ou 2 para RESIDENCIAL")
     @NotNull
     private TipoEndereco tipo;
-    @Schema(description = "Logradouro do endereço")
+    @Schema(description = "Logradouro do endereço", example = "Rua Dois")
     @NotBlank
     @Size(max = 250)
     private String logradouro;
-    @Schema(description = "Número do endereço")
+    @Schema(description = "Número do endereço", example = "1000")
     @NotNull
     private Integer numero;
     @Schema(description = "Complemento do endereço")
     private String complemento;
-    @Schema(description = "CEP do endereço")
+    @Schema(description = "CEP do endereço", example = "02412005")
     @NotBlank
     @Size(max = 8)
     private String cep;
-    @Schema(description = "Cidade do endereço")
+    @Schema(description = "Cidade do endereço", example = "São Paulo")
     @NotEmpty
     @Size(max = 250)
     private String cidade;
-    @Schema(description = "Estado do endereço")
+    @Schema(description = "Estado do endereço", example = "SP")
     @NotNull
     private String estado;
-    @Schema(description = "País do endereço")
+    @Schema(description = "País do endereço", example = "Brasil")
     @NotNull
     private String pais;
 }
