@@ -29,10 +29,10 @@ public class ContatoService {
 
     public ContatoDTO create(ContatoDTOCreate contato, Integer idPessoa) throws RegraDeNegocioException {
         PessoaEntity pessoaEntityValida = pessoaService.findById(idPessoa);
+        contato.setIdPessoa(idPessoa);
         ContatoEntity contatoEntity = objectMapper.convertValue(contato, ContatoEntity.class);
         log.info("Criando contato...");
-        ContatoEntity contatoEntityCriado = contatoRepository.save(contatoEntity);
-        contatoEntity.setIdPessoa(idPessoa);
+        contatoEntity = contatoRepository.save(contatoEntity);
         log.info("Contato criado!");
         return objectMapper.convertValue(contatoEntity,ContatoDTO.class);
     }
@@ -68,10 +68,9 @@ public class ContatoService {
     }
 
     public ContatoEntity findById(Integer idContato) throws RegraDeNegocioException {
-        ContatoEntity contatoEntityRecuperado = contatoRepository.findAll().stream()
+        return contatoRepository.findAll().stream()
                 .filter(contatoEntity -> contatoEntity.getIdContato().equals(idContato))
                 .findFirst()
                 .orElseThrow(()->new RegraDeNegocioException("Contato não cadastrado"));
-        return contatoEntityRecuperado;
     }
 }

@@ -2,7 +2,9 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOCreate;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +27,8 @@ public class PessoaController {
     private PessoaService pessoaService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PessoaRepository pessoaRepository;
 //    @Autowired
 //    private PropertyReader propertyReader;
 
@@ -64,6 +68,16 @@ public class PessoaController {
     @GetMapping // localhost:8080/pessoa
     public List<PessoaDTO> list() {
         return pessoaService.list();
+    }
+
+    @GetMapping("/findByCpf") // localhost:8080/pessoa
+    public List<PessoaEntity> listByCpf(@RequestParam String cpf) {
+        return pessoaRepository.findByCpf(cpf);
+    }
+
+    @GetMapping("/findByNome") // localhost:8080/pessoa
+    public List<PessoaEntity> listByNome(@RequestParam String nome) {
+        return pessoaRepository.findByNomeContainsIgnoreCase(nome);
     }
 
     @Operation(summary = "Listar pessoas por nome", description = "Lista as pessoas com o nome buscado")
