@@ -2,7 +2,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTOCreate;
-import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
@@ -29,49 +29,49 @@ public class ContatoService {
 
     public ContatoDTO create(ContatoDTOCreate contato, Integer idPessoa) throws RegraDeNegocioException {
         PessoaEntity pessoaEntityValida = pessoaService.findById(idPessoa);
-        Contato contatoEntity = objectMapper.convertValue(contato,Contato.class);
+        ContatoEntity contatoEntity = objectMapper.convertValue(contato, ContatoEntity.class);
         log.info("Criando contato...");
-        Contato contatoCriado = contatoRepository.create(contatoEntity);
+        ContatoEntity contatoEntityCriado = contatoRepository.save(contatoEntity);
         contatoEntity.setIdPessoa(idPessoa);
         log.info("Contato criado!");
         return objectMapper.convertValue(contatoEntity,ContatoDTO.class);
     }
     public List<ContatoDTO> list(){
-        return contatoRepository.list().stream().map(contato -> objectMapper.convertValue(contato,ContatoDTO.class)).collect(Collectors.toList());
+        return contatoRepository.findAll().stream().map(contatoEntity -> objectMapper.convertValue(contatoEntity,ContatoDTO.class)).collect(Collectors.toList());
     }
     public ContatoDTO update(Integer id,
                          ContatoDTOCreate contatoAtualizar) throws RegraDeNegocioException {
         pessoaService.findById(contatoAtualizar.getIdPessoa());
-        Contato contatoRecuperado = findById(id);
-        objectMapper.convertValue(contatoAtualizar,Contato.class);
+        ContatoEntity contatoEntityRecuperado = findById(id);
+        objectMapper.convertValue(contatoAtualizar, ContatoEntity.class);
         log.info("Atualizando contato...");
-        contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
-        contatoRecuperado.setNumero(contatoAtualizar.getNumero());
-        contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
+        contatoEntityRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
+        contatoEntityRecuperado.setNumero(contatoAtualizar.getNumero());
+        contatoEntityRecuperado.setDescricao(contatoAtualizar.getDescricao());
         log.info("Contato atualizado!");
-        return objectMapper.convertValue(contatoRecuperado,ContatoDTO.class);
+        return objectMapper.convertValue(contatoRepository.save(contatoEntityRecuperado),ContatoDTO.class);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        Contato contato = findById(id);
+        ContatoEntity contatoEntity = findById(id);
         log.info("Deletando contato....");
-        contatoRepository.list().remove(contato);
+        contatoRepository.delete(contatoEntity);
         log.info("Contato deletado");
     }
 
     public List<ContatoDTO> listByIdPessoa(Integer id) throws RegraDeNegocioException {
         pessoaService.findById(id);
-        return contatoRepository.list().stream()
-                .filter(contato -> contato.getIdPessoa().equals(id))
-                .map(contato -> objectMapper.convertValue(contato,ContatoDTO.class))
+        return contatoRepository.findAll().stream()
+                .filter(contatoEntity -> contatoEntity.getIdPessoa().equals(id))
+                .map(contatoEntity -> objectMapper.convertValue(contatoEntity,ContatoDTO.class))
                 .collect(Collectors.toList());
     }
 
-    public Contato findById(Integer idContato) throws RegraDeNegocioException {
-        Contato contatoRecuperado = contatoRepository.list().stream()
-                .filter(contato -> contato.getIdContato().equals(idContato))
+    public ContatoEntity findById(Integer idContato) throws RegraDeNegocioException {
+        ContatoEntity contatoEntityRecuperado = contatoRepository.findAll().stream()
+                .filter(contatoEntity -> contatoEntity.getIdContato().equals(idContato))
                 .findFirst()
                 .orElseThrow(()->new RegraDeNegocioException("Contato não cadastrado"));
-        return contatoRecuperado;
+        return contatoEntityRecuperado;
     }
 }
