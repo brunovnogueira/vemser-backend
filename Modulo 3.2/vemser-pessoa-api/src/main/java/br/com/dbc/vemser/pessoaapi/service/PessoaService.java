@@ -2,7 +2,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOCreate;
-import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,8 +29,8 @@ public class PessoaService {
 
     public PessoaDTO create(PessoaDTOCreate pessoa){
         log.info("Criando pessoa...");
-        Pessoa pessoaEntity = objectMapper.convertValue(pessoa,Pessoa.class);
-        pessoaRepository.create(pessoaEntity);
+        PessoaEntity pessoaEntity = objectMapper.convertValue(pessoa, PessoaEntity.class);
+        pessoaRepository.save(pessoaEntity);
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
         log.info("Pessoa criada!");
         emailService.sendEmailPessoaCadastrada(pessoaDTO);
@@ -39,41 +39,40 @@ public class PessoaService {
 
     public List<PessoaDTO> list(){
 
-        return pessoaRepository.list().stream()
-                .map(pessoa -> objectMapper.convertValue(pessoa,PessoaDTO.class)).collect(Collectors.toList());
+        return pessoaRepository.findAll().stream()
+                .map(pessoaEntity -> objectMapper.convertValue(pessoaEntity,PessoaDTO.class)).collect(Collectors.toList());
 
     }
 
     public PessoaDTO update(Integer id,
                          PessoaDTOCreate pessoaAtualizar) throws RegraDeNegocioException {
-        Pessoa pessoaEntity = objectMapper.convertValue(pessoaAtualizar,Pessoa.class);
-        Pessoa pessoaRecuperada = findById(id);
+        PessoaEntity pessoaEntityRecuperada = findById(id);
         log.info("Atualizando pessoa...");
-        pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
-        pessoaRecuperada.setNome(pessoaAtualizar.getNome());
-        pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
+        pessoaEntityRecuperada.setCpf(pessoaAtualizar.getCpf());
+        pessoaEntityRecuperada.setNome(pessoaAtualizar.getNome());
+        pessoaEntityRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
         log.info("Pessoa atualizada!");
-        return objectMapper.convertValue(pessoaRecuperada,PessoaDTO.class);
+        return objectMapper.convertValue(pessoaRepository.save(pessoaEntityRecuperada),PessoaDTO.class);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        Pessoa pessoa = findById(id);
+        PessoaEntity pessoaEntity = findById(id);
         log.info("Deletando pessoa....");
-        pessoaRepository.list().remove(pessoa);
+        pessoaRepository.delete(pessoaEntity);
         log.info("Pessoa deletada!");
     }
 
     public List<PessoaDTO> listByName(String nome) {
-        return pessoaRepository.list().stream()
-                .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
-                .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class)).collect(Collectors.toList());
+        return pessoaRepository.findAll().stream()
+                .filter(pessoaEntity -> pessoaEntity.getNome().toUpperCase().contains(nome.toUpperCase()))
+                .map(pessoaEntity -> objectMapper.convertValue(pessoaEntity, PessoaDTO.class)).collect(Collectors.toList());
     }
 
-    public Pessoa findById(Integer id) throws RegraDeNegocioException {
-        Pessoa pessoaRecuperada = pessoaRepository.list().stream()
-                .filter(pessoa -> pessoa.getIdPessoa().equals(id))
+    public PessoaEntity findById(Integer id) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntityRecuperada = pessoaRepository.findAll().stream()
+                .filter(pessoaEntity -> pessoaEntity.getIdPessoa().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada"));
-        return pessoaRecuperada;
+        return pessoaEntityRecuperada;
     }
 }

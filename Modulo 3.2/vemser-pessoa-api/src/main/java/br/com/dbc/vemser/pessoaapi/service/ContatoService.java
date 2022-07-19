@@ -3,7 +3,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTOCreate;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
-import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +28,7 @@ public class ContatoService {
     }
 
     public ContatoDTO create(ContatoDTOCreate contato, Integer idPessoa) throws RegraDeNegocioException {
-        Pessoa pessoaValida = pessoaService.findById(idPessoa);
+        PessoaEntity pessoaEntityValida = pessoaService.findById(idPessoa);
         Contato contatoEntity = objectMapper.convertValue(contato,Contato.class);
         log.info("Criando contato...");
         Contato contatoCriado = contatoRepository.create(contatoEntity);

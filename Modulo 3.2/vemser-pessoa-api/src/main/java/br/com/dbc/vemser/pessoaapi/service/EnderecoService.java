@@ -4,7 +4,7 @@ import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTOCreate;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
-import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,8 +48,8 @@ public class EnderecoService {
     }
 
     public EnderecoDTO create(Integer idPessoa, EnderecoDTOCreate endereco) throws RegraDeNegocioException {
-        Pessoa pessoaValida = pessoaService.findById(idPessoa);
-        PessoaDTO pessoaValidaDTO = objectMapper.convertValue(pessoaValida, PessoaDTO.class);
+        PessoaEntity pessoaEntityValida = pessoaService.findById(idPessoa);
+        PessoaDTO pessoaValidaDTO = objectMapper.convertValue(pessoaEntityValida, PessoaDTO.class);
         Endereco enderecoEntity = objectMapper.convertValue(endereco,Endereco.class);
         log.info("Criando endereço....");
         Endereco enderecoCriado = enderecoRepository.create(enderecoEntity);
@@ -61,8 +61,8 @@ public class EnderecoService {
     }
 
     public EnderecoDTO update(Integer id, EnderecoDTOCreate enderecoAtualizar) throws RegraDeNegocioException {
-        Pessoa pessoaValida = pessoaService.findById(id);
-        PessoaDTO pessoaValidaDTO = objectMapper.convertValue(pessoaValida,PessoaDTO.class);
+        PessoaEntity pessoaEntityValida = pessoaService.findById(id);
+        PessoaDTO pessoaValidaDTO = objectMapper.convertValue(pessoaEntityValida,PessoaDTO.class);
         Endereco enderecoRecuperado = findById(id);
         objectMapper.convertValue(enderecoAtualizar,Endereco.class);
         log.info("Atualizando endereço....");
@@ -82,8 +82,8 @@ public class EnderecoService {
 
     public void delete(Integer id) throws RegraDeNegocioException {
         Endereco endereco = findById(id);
-        Pessoa pessoa = pessoaService.findById(endereco.getIdPessoa());
-        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoa,PessoaDTO.class);
+        PessoaEntity pessoaEntity = pessoaService.findById(endereco.getIdPessoa());
+        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity,PessoaDTO.class);
         EnderecoDTO enderecoDTO = objectMapper.convertValue(endereco,EnderecoDTO.class);
         log.info("Deletendo endereço....");
         enderecoRepository.list().remove(endereco);
