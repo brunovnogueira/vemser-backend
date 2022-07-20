@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDTOCreate;
+import br.com.dbc.vemser.pessoaapi.dto.*;
+import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
@@ -44,8 +44,70 @@ public class PessoaService {
 
     }
 
+    public List<PessoaDTO> listPessoaEndereco(Integer id){
+        if (id != null){
+            return pessoaRepository.findById(id).stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setEnderecos(pessoaEntity.getEnderecos().stream()
+                                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                                .toList());
+                        return pessoaDTO;
+                    }).toList();
+        }else {
+            return pessoaRepository.findAll().stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setEnderecos(pessoaEntity.getEnderecos().stream()
+                                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                                .toList());
+                        return pessoaDTO;
+                    }).toList();
+        }
+    }
+
+    public List<PessoaDTO> listPessoaContato(Integer id){
+        if (id != null){
+            return pessoaRepository.findById(id).stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setContatos(pessoaEntity.getContatos().stream()
+                                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                                .toList());
+                        return pessoaDTO;
+                    }).toList();
+        }else {
+            return pessoaRepository.findAll().stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setContatos(pessoaEntity.getContatos().stream()
+                                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                                .toList());
+                        return pessoaDTO;
+                    }).toList();
+        }
+    }
+
+    public List<PessoaDTO> listPessoaPets(Integer id) {
+        if (id != null){
+            return pessoaRepository.findById(id).stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setPets(objectMapper.convertValue(pessoaEntity.getPet(), PetDTO.class));
+                        return pessoaDTO;
+                    }).toList();
+        } else {
+            return pessoaRepository.findAll().stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setPets(objectMapper.convertValue(pessoaEntity.getPet(), PetDTO.class));
+                        return pessoaDTO;
+                    }).toList();
+        }
+    }
+
     public PessoaDTO update(Integer id,
-                         PessoaDTOCreate pessoaAtualizar) throws RegraDeNegocioException {
+                            PessoaDTOCreate pessoaAtualizar) throws RegraDeNegocioException {
         PessoaEntity pessoaEntityRecuperada = findById(id);
         log.info("Atualizando pessoa...");
         pessoaEntityRecuperada.setCpf(pessoaAtualizar.getCpf());

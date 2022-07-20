@@ -70,6 +70,48 @@ public class PessoaController {
         return pessoaService.list();
     }
 
+    @Operation(summary = "Listar pessoas com endereços pelo id", description = "As pessoas e seus endereços")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas e endereços"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "400", description = "Erro na requisição"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("/listar-com-enderecos")
+    public List<PessoaDTO> listEnderecosById(@RequestParam(required = false) Integer id) {
+        return pessoaService.listPessoaEndereco(id);
+    }
+
+    @Operation(summary = "Listar pessoas com contatos pelo id", description = "Retorna as pessoas e seus endereços")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas e contatos"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "400", description = "Erro na requisição"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("/listar-com-contatos")
+    public List<PessoaDTO> listContatosById(@RequestParam(required = false) Integer id) {
+        return pessoaService.listPessoaContato(id);
+    }
+
+    @Operation(summary = "Listar pessoas com pets pelo id", description = "Retorna pessoas e seus pets")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas e pets"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "400", description = "Erro na requisição"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("/listar-com-pets")
+    public List<PessoaDTO> listPetsById(@RequestParam(required = false) Integer id) {
+        return pessoaService.listPessoaPets(id);
+    }
+
     @GetMapping("/findByCpf") // localhost:8080/pessoa
     public List<PessoaEntity> listByCpf(@RequestParam String cpf) {
         return pessoaRepository.findByCpf(cpf);

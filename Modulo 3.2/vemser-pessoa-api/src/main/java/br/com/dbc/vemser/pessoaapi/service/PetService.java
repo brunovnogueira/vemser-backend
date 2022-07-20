@@ -30,7 +30,6 @@ public class PetService {
         petEntity.setPessoa(pessoaService.findById(id));
         pessoaService.findById(id).setPet(petEntity);
         petRepository.save(petEntity);
-        pessoaService.findById(id).setPet(petEntity);
         return objectMapper.convertValue(petRepository.save(petEntity),PetDTO.class);
     }
 
