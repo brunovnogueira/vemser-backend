@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
+import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTOCreate;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,15 +44,19 @@ public class EnderecoService {
 
     public List<EnderecoDTO> listByIdPessoa(Integer id) throws RegraDeNegocioException {
         PessoaEntity pessoaEntity = pessoaService.findById(id);
-        return enderecoRepository.findAll().stream()
-                .filter(enderecoEntity -> enderecoEntity.getPessoas().contains(pessoaEntity))
-                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
-                .toList();
+        return enderecoRepository.findById(id).stream()
+                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity,EnderecoDTO.class))
+                .collect(Collectors.toList());
+//        return enderecoRepository.findAll().stream()
+//                .filter(enderecoEntity -> enderecoEntity.getPessoas().contains(pessoaEntity))
+//                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+//                .toList();
     }
 
     public EnderecoDTO create(Integer idPessoa, EnderecoDTOCreate endereco) throws RegraDeNegocioException {
         EnderecoEntity enderecoEntity = objectMapper.convertValue(endereco, EnderecoEntity.class);
         PessoaEntity pessoaEntityValida = pessoaService.findById(idPessoa);
+        enderecoEntity.setPessoas(Set.of(pessoaEntityValida));
         PessoaDTO pessoaValidaDTO = objectMapper.convertValue(pessoaEntityValida, PessoaDTO.class);
         log.info("Criando endereço....");
         EnderecoEntity enderecoEntityCriado = enderecoRepository.save(enderecoEntity);
@@ -59,23 +65,16 @@ public class EnderecoService {
         return enderecoCriadoDTO;
     }
 
-    public EnderecoDTO update(Integer id, EnderecoDTOCreate enderecoAtualizar) throws RegraDeNegocioException {
-        PessoaEntity pessoaEntityValida = pessoaService.findById(id);
+    public EnderecoDTO update(Integer id, EnderecoDTO enderecoAtualizar) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntityValida = pessoaService.findById(enderecoAtualizar.getIdPessoa());
         PessoaDTO pessoaValidaDTO = objectMapper.convertValue(pessoaEntityValida,PessoaDTO.class);
         EnderecoEntity enderecoEntityRecuperado = findById(id);
-        objectMapper.convertValue(enderecoAtualizar, EnderecoEntity.class);
+        EnderecoEntity enderecoEntity = objectMapper.convertValue(enderecoAtualizar, EnderecoEntity.class);
+        enderecoEntity.setIdEndereco(id);
         log.info("Atualizando endereço....");
-        enderecoEntityRecuperado.setTipo(enderecoAtualizar.getTipo());
-        enderecoEntityRecuperado.setLogradouro(enderecoAtualizar.getLogradouro());
-        enderecoEntityRecuperado.setNumero(enderecoAtualizar.getNumero());
-        enderecoEntityRecuperado.setComplemento(enderecoAtualizar.getComplemento());
-        enderecoEntityRecuperado.setCep(enderecoAtualizar.getCep());
-        enderecoEntityRecuperado.setCidade(enderecoAtualizar.getCidade());
-        enderecoEntityRecuperado.setEstado(enderecoAtualizar.getEstado());
-        enderecoEntityRecuperado.setPais(enderecoAtualizar.getPais());
-        EnderecoDTO enderecoRecuperadoDTO = objectMapper.convertValue(enderecoRepository.save(enderecoEntityRecuperado),EnderecoDTO.class);
+        enderecoEntity.setPessoas(Set.of(pessoaEntityValida));
+        EnderecoDTO enderecoRecuperadoDTO = objectMapper.convertValue(enderecoRepository.save(enderecoEntity),EnderecoDTO.class);
         log.info("Endereço atualizado!");
-        emailService.emailAtualizacaoEndereco(enderecoRecuperadoDTO,pessoaValidaDTO);
         return enderecoRecuperadoDTO;
     }
 

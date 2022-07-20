@@ -1,10 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
-
-import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
-import br.com.dbc.vemser.pessoaapi.dto.ContatoDTOCreate;
 import br.com.dbc.vemser.pessoaapi.dto.PetCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PetDTO;
-import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PetEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
@@ -28,24 +24,34 @@ public class PetService {
     public PetDTO create(PetCreateDTO pet, Integer id) throws RegraDeNegocioException {
         PetEntity petEntity = objectMapper.convertValue(pet, PetEntity.class);
         petEntity.setPessoa(pessoaService.findById(id));
-        pessoaService.findById(id).setPet(petEntity);
+        //pessoaService.findById(id).setPet(petEntity);
         petRepository.save(petEntity);
-        return objectMapper.convertValue(petRepository.save(petEntity),PetDTO.class);
+        return objectMapper.convertValue(petEntity,PetDTO.class);
     }
 
     public List<PetDTO> list(){
-        return petRepository.findAll().stream().map(petEntity -> objectMapper.convertValue(petEntity,PetDTO.class)).collect(Collectors.toList());
+        return petRepository.findAll().stream()
+                .map(petEntity -> objectMapper.convertValue(petEntity,PetDTO.class))
+                .collect(Collectors.toList());
     }
 
     public PetDTO update(Integer id,
                              PetCreateDTO petAtualizar) throws RegraDeNegocioException {
         pessoaService.findById(petAtualizar.getIdPessoa());
         PetEntity petEntityRecuperado = findById(id);
+        PessoaEntity pessoaEntity = petEntityRecuperado.getPessoa();
+        pessoaEntity.setPet(null);
+        PessoaEntity pessoaRecuperada = pessoaService.findById(petAtualizar.getIdPessoa());
         petEntityRecuperado.setIdPet(id);
         objectMapper.convertValue(petAtualizar, PetEntity.class);
         petEntityRecuperado.setNome(petAtualizar.getNome());
         petEntityRecuperado.setTipo(petAtualizar.getTipo());
-        petEntityRecuperado.setIdPessoa(petAtualizar.getIdPessoa());
+        petEntityRecuperado.setPessoa(pessoaRecuperada);
+        pessoaRecuperada.setPet(petEntityRecuperado);
+        pessoaService.save(pessoaRecuperada);
+        if (!pessoaRecuperada.getIdPessoa().equals(pessoaEntity.getIdPessoa())){
+            pessoaService.save(pessoaEntity);
+        }
         return objectMapper.convertValue(petRepository.save(petEntityRecuperado),PetDTO.class);
     }
 

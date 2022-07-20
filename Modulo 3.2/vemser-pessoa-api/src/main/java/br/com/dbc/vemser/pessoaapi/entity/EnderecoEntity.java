@@ -36,9 +36,9 @@ public class EnderecoEntity {
     private String pais;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "Pessoa_X_Pessoa_Endereco",
             joinColumns = @JoinColumn(name = "id_endereco"),
             inverseJoinColumns = @JoinColumn(name = "id_pessoa"))
-    Set<PessoaEntity> pessoas;
+    private Set<PessoaEntity> pessoas;
 }

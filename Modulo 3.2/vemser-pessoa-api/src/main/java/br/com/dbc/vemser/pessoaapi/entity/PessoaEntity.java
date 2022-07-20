@@ -26,6 +26,8 @@ public class PessoaEntity {
     private String cpf;
     @Column(name = "EMAIL")
     private String email;
+    @Column(name = "ID_PET", insertable = false, updatable = false)
+    private String idPet;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,

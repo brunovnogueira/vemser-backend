@@ -130,6 +130,10 @@ public class PessoaService {
                 .map(pessoaEntity -> objectMapper.convertValue(pessoaEntity, PessoaDTO.class)).collect(Collectors.toList());
     }
 
+    public PessoaEntity save(PessoaEntity pessoaEntity){
+        return this.pessoaRepository.save(pessoaEntity);
+    }
+
     public PessoaEntity findById(Integer id) throws RegraDeNegocioException {
         PessoaEntity pessoaEntityRecuperada = pessoaRepository.findAll().stream()
                 .filter(pessoaEntity -> pessoaEntity.getIdPessoa().equals(id))

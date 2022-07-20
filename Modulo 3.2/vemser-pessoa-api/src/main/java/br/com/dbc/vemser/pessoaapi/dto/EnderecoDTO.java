@@ -11,4 +11,6 @@ import lombok.*;
 public class EnderecoDTO extends EnderecoDTOCreate {
     @Schema(description = "Id do endereço")
     private Integer idEndereco;
+    @Schema(description = "Id da pessoa")
+    private Integer idPessoa;
 }

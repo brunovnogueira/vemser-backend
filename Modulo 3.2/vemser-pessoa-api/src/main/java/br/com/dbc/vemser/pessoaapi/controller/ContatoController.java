@@ -2,7 +2,10 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTOCreate;
+import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.dbc.vemser.pessoaapi.enums.TipoContato;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +25,8 @@ public class ContatoController {
 
     @Autowired
     private ContatoService contatoService;
+    @Autowired
+    private ContatoRepository contatoRepository;
 
     public ContatoController() {
 
@@ -40,6 +45,20 @@ public class ContatoController {
     @GetMapping
     public List<ContatoDTO> list(){
         return contatoService.list();
+    }
+
+    @Operation(summary = "Listar contatos", description = "Lista todas os contatos do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de contatos"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "400", description = "Erro na requisição"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("/list-por-tipo")
+    public List<ContatoEntity> listByTipo(TipoContato tipoContato){
+        return contatoRepository.listByTipoContato(tipoContato);
     }
 
     //Listar por id pessoa
