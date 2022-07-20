@@ -1,9 +1,11 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
 import br.com.dbc.vemser.pessoaapi.enums.TipoEndereco;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,4 +34,11 @@ public class EnderecoEntity {
     private String estado;
     @Column(name = "PAIS")
     private String pais;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "Pessoa_X_Pessoa_Endereco",
+            joinColumns = @JoinColumn(name = "id_endereco"),
+            inverseJoinColumns = @JoinColumn(name = "id_pessoa"))
+    Set<PessoaEntity> pessoas;
 }

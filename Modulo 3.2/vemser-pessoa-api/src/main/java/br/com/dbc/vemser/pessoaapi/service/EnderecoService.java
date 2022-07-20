@@ -40,15 +40,22 @@ public class EnderecoService {
                 .collect(Collectors.toList());
     }
 
+    public List<EnderecoDTO> listByIdPessoa(Integer id) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.findById(id);
+        return enderecoRepository.findAll().stream()
+                .filter(enderecoEntity -> enderecoEntity.getPessoas().contains(pessoaEntity))
+                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                .toList();
+    }
+
     public EnderecoDTO create(Integer idPessoa, EnderecoDTOCreate endereco) throws RegraDeNegocioException {
+        EnderecoEntity enderecoEntity = objectMapper.convertValue(endereco, EnderecoEntity.class);
         PessoaEntity pessoaEntityValida = pessoaService.findById(idPessoa);
         PessoaDTO pessoaValidaDTO = objectMapper.convertValue(pessoaEntityValida, PessoaDTO.class);
-        EnderecoEntity enderecoEntity = objectMapper.convertValue(endereco, EnderecoEntity.class);
         log.info("Criando endereço....");
         EnderecoEntity enderecoEntityCriado = enderecoRepository.save(enderecoEntity);
         EnderecoDTO enderecoCriadoDTO = objectMapper.convertValue(enderecoEntityCriado,EnderecoDTO.class);
         log.info("Endereço criado!");
-        emailService.emailCadastroEndereco(enderecoCriadoDTO,pessoaValidaDTO);
         return enderecoCriadoDTO;
     }
 

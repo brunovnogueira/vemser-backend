@@ -49,6 +49,19 @@ public class EnderecoController {
     public List<EnderecoDTO> listPorId(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
         return enderecoService.listPorId(id);
     }
+    @Operation(summary = "Lista endereços de uma pessoa", description = "Lista de endereços por pessoa")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna o endereço do id correspondente"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "400", description = "Erro na requisição"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("/{idPessoa}/pessoa")
+    public List<EnderecoDTO> listByIdPessoa(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
+        return enderecoService.listByIdPessoa(id);
+    }
     @Operation(summary = "Criar um endereço", description = "Cria um novo endereço no banco")
     @ApiResponses(
             value = {
