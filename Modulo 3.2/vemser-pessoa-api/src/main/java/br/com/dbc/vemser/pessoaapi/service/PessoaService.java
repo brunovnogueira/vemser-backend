@@ -89,7 +89,7 @@ public class PessoaService {
     }
     public List<PessoaDTO> listPessoaCompleta(Integer id){
         if (id != null){
-            return pessoaRepository.listPessoaCompleto(id).stream()
+            return pessoaRepository.findById(id).stream()
                     .map(pessoaEntity -> {
                         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
                         pessoaDTO.setContatos(pessoaEntity.getContatos().stream()
@@ -102,7 +102,7 @@ public class PessoaService {
                         return pessoaDTO;
                     }).toList();
         }else {
-            return pessoaRepository.listPessoaCompletoSemId().stream()
+            return pessoaRepository.findAll().stream()
                     .map(pessoaEntity -> {
                         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
                         pessoaDTO.setContatos(pessoaEntity.getContatos().stream()

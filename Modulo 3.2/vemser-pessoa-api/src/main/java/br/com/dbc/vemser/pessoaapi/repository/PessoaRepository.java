@@ -30,19 +30,6 @@ public interface PessoaRepository extends JpaRepository<PessoaEntity,Integer> {
             " join p.contatos cont " +
             "where cont.tipoContato = :tipoContato")
     List<PessoaEntity> listPessoasByTipoContato (@Param("tipoContato")TipoContato tipoContato);
-    @Query("select p,c,e,pe " +
-            " from PESSOA p " +
-            " join p.contatos c " +
-            " join p.enderecos e " +
-            " join p.pet pe " +
-            "where p.idPessoa = :idPessoa ")
-    List<PessoaEntity> listPessoaCompleto (@Param("idPessoa")Integer idPessoa);
-    @Query("select p,c,e,pe " +
-            " from PESSOA p " +
-            " join p.contatos c " +
-            " join p.enderecos e " +
-            " join p.pet pe ")
-    List<PessoaEntity> listPessoaCompletoSemId ();
     @Query("select new br.com.dbc.vemser.pessoaapi.dto.RelatorioPessoaDTO(" +
             "p.idPessoa, " +
             "p.nome, " +
