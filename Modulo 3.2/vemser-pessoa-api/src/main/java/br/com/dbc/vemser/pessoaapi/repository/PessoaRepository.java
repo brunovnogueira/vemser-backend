@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
+import br.com.dbc.vemser.pessoaapi.dto.RelatorioPessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.enums.TipoContato;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,35 @@ public interface PessoaRepository extends JpaRepository<PessoaEntity,Integer> {
             " join p.contatos cont " +
             "where cont.tipoContato = :tipoContato")
     List<PessoaEntity> listPessoasByTipoContato (@Param("tipoContato")TipoContato tipoContato);
+    @Query("select distinct p,c,e,pe " +
+            " from PESSOA p " +
+            " join p.contatos c " +
+            " join p.enderecos e " +
+            " join p.pet pe " +
+            "where p.idPessoa = :idPessoa ")
+            //"group by p.nome")
+    List<PessoaEntity> listPessoaCompleto (@Param("idPessoa")Integer idPessoa);
+    @Query("select distinct p,c,e,pe " +
+            " from PESSOA p " +
+            " join p.contatos c " +
+            " join p.enderecos e " +
+            " join p.pet pe ")
+            //"group by p.nome")
+    List<PessoaEntity> listPessoaCompletoSemId ();
+    @Query("select new br.com.dbc.vemser.pessoaapi.dto.RelatorioPessoaDTO(" +
+            "p.idPessoa, " +
+            "p.nome, " +
+            "p.email, " +
+            "c.numero, " +
+            "e.cep, " +
+            "e.cidade, " +
+            "e.estado, " +
+            "e.pais, " +
+            "pet.nome) " +
+            "from PESSOA p " +
+            "left join p.contatos c " +
+            "left join p.enderecos e " +
+            "left join p.pet pet " +
+            "where p.idPessoa = :idPessoa")
+    List<RelatorioPessoaDTO> relatorioPessoa(@Param("idPessoa") Integer idPessoa);
 }

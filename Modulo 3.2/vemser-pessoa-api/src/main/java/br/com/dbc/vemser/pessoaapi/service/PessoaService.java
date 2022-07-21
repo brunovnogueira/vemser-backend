@@ -87,7 +87,35 @@ public class PessoaService {
                     }).toList();
         }
     }
-
+    public List<PessoaDTO> listPessoaCompleta(Integer id){
+        if (id != null){
+            return pessoaRepository.listPessoaCompleto(id).stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setContatos(pessoaEntity.getContatos().stream()
+                                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                                .toList());
+                        pessoaDTO.setEnderecos(pessoaEntity.getEnderecos().stream()
+                                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                                .toList());
+                        pessoaDTO.setPets(objectMapper.convertValue(pessoaEntity.getPet(),PetDTO.class));
+                        return pessoaDTO;
+                    }).toList();
+        }else {
+            return pessoaRepository.listPessoaCompletoSemId().stream()
+                    .map(pessoaEntity -> {
+                        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+                        pessoaDTO.setContatos(pessoaEntity.getContatos().stream()
+                                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                                .toList());
+                        pessoaDTO.setEnderecos(pessoaEntity.getEnderecos().stream()
+                                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                                .toList());
+                        pessoaDTO.setPets(objectMapper.convertValue(pessoaEntity.getPet(),PetDTO.class));
+                        return pessoaDTO;
+                    }).toList();
+        }
+    }
     public List<PessoaDTO> listPessoaPets(Integer id) {
         if (id != null){
             return pessoaRepository.findById(id).stream()
@@ -104,6 +132,10 @@ public class PessoaService {
                         return pessoaDTO;
                     }).toList();
         }
+    }
+
+    public List<RelatorioPessoaDTO> relatorioPessoa(Integer id){
+        return pessoaRepository.relatorioPessoa(id);
     }
 
     public PessoaDTO update(Integer id,
