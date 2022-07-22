@@ -15,6 +15,8 @@ import javax.validation.constraints.Size;
 @Setter
 @ToString
 public class EnderecoDTOCreate {
+    @Schema(description = "Id da pessoa", example = "1")
+    private Integer idPessoa;
     @Schema(description = "Tipo do endereço", example = "1 para COMERCIAL ou 2 para RESIDENCIAL")
     @NotNull
     private TipoEndereco tipo;

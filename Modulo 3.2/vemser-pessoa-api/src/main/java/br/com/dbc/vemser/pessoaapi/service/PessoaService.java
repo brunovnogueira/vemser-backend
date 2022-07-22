@@ -5,6 +5,7 @@ import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
+import br.com.dbc.vemser.pessoaapi.repository.PetRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class PessoaService {
     private ObjectMapper objectMapper;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PetRepository petRepository;
     public PessoaService(){
 
     }
@@ -152,6 +155,7 @@ public class PessoaService {
     public void delete(Integer id) throws RegraDeNegocioException {
         PessoaEntity pessoaEntity = findById(id);
         log.info("Deletando pessoa....");
+        petRepository.delete(pessoaEntity.getPet());
         pessoaRepository.delete(pessoaEntity);
         log.info("Pessoa deletada!");
     }

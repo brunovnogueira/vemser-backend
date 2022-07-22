@@ -129,7 +129,7 @@ public class PessoaController {
     }
 
     @GetMapping("/relatorio") // localhost:8080/pessoa
-    public List<RelatorioPessoaDTO> relatorioPessoa(Integer id) {
+    public List<RelatorioPessoaDTO> relatorioPessoa(@RequestParam(required = false) Integer id) {
         return pessoaService.relatorioPessoa(id);
     }
 
