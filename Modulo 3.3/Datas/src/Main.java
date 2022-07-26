@@ -63,14 +63,14 @@ public class Main {
         LocalDate nowTolocalDate = now.toLocalDate();
         LocalTime dataShowLocalTime = dataShow.toLocalTime();
         LocalTime nowLocalTime = now.toLocalTime();
-
+        Duration duration = Duration.between(nowLocalTime,dataShowLocalTime);
         Period period = Period.between(nowTolocalDate,dataShowLocalDate);
 
-        long horas = ChronoUnit.HOURS.between(nowLocalTime,dataShowLocalTime);
+        long horas = duration.toHours();
         //Transformas as horas em minutos e ver a diferença
-        long minutos = ChronoUnit.MINUTES.between(nowLocalTime,dataShowLocalTime) - (horas*60);
+        long minutos = duration.toMinutes() - (horas*60);
         //Transformar horas e minutos em segundos, somar e ver a diferença
-        long segundos = ChronoUnit.SECONDS.between(nowLocalTime,dataShowLocalTime) - ((horas*3600)+(minutos*60));
+        long segundos = duration.toSeconds() - ((horas*3600)+(minutos*60));
 
         System.out.println(period.getYears()+" ANOS");
         System.out.println(period.getMonths()+" MESES") ;
