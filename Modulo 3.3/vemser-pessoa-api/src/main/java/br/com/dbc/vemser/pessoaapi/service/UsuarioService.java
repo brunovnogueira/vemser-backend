@@ -20,7 +20,7 @@ import java.util.Optional;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();;
 
     public Optional<UsuarioEntity> findByLoginAndSenha(String login, String senha){
