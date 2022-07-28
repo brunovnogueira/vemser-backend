@@ -6,6 +6,9 @@ import br.com.dbc.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.security.TokenService;
 import br.com.dbc.vemser.pessoaapi.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,15 +25,28 @@ import java.util.Optional;
 public class AuthController {
     private final UsuarioService usuarioService;
     private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping
-    public String auth(@RequestBody @Valid LoginDTO loginDTO) throws RegraDeNegocioException {
-        Optional<UsuarioEntity> usuarioOptional = usuarioService.findByLoginAndSenha(loginDTO.getLogin(), loginDTO.getSenha());
-        if (usuarioOptional.isPresent()){
-            String token = tokenService.getToken(usuarioOptional.get());
-            return token;
-        }
-        throw new RegraDeNegocioException("Usuário ou senha inválidos");
-        // FIXME adicionar mecanismo de autenticação para verificar se o usuário é válido e retornar o token
+    public String auth(@RequestBody @Valid LoginDTO loginDTO) {
+
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                  loginDTO.getLogin(),
+                  loginDTO.getSenha()
+                );
+        Authentication authentication = authenticationManager
+                .authenticate(usernamePasswordAuthenticationToken);
+
+        Object usuarioLogado = authentication.getPrincipal();
+        UsuarioEntity usuarioEntity = (UsuarioEntity) usuarioLogado;
+
+        String token = tokenService.getToken(usuarioEntity);
+        return token;
+    }
+
+    @PostMapping("/create")
+    public LoginDTO create(@RequestBody @Valid LoginDTO loginDTO) {
+        return usuarioService.create(loginDTO);
     }
 }
